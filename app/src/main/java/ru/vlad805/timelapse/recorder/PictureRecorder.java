@@ -2,6 +2,7 @@ package ru.vlad805.timelapse.recorder;
 
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.util.Pair;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -26,7 +27,7 @@ public class PictureRecorder implements IRecorder {
 	private int mTotalSize = 0;
 	private int mFrameCount = 0;
 	private String mPath;
-	private ArrayList<String> mPhotos;
+	private ArrayList<Pair<Long,String>> mPhotos;
 	private long mStart;
 	private static SettingsBundle mSettings;
 
@@ -95,7 +96,7 @@ public class PictureRecorder implements IRecorder {
 	{
 		mFrameCount++;
 
-		mPhotos.add(mFrameCount + ".jpg");
+		mPhotos.add(new Pair<Long, String>(System.currentTimeMillis(),mFrameCount + ".jpg"));
 
 		if(mSettings.ismSmbUpload()) {
 			new Uploader(mPath,mFrameCount,data).execute();
@@ -122,6 +123,11 @@ public class PictureRecorder implements IRecorder {
 	}
 
 	private String generateJSON() throws JSONException {
+		JSONArray photos = new JSONArray();
+		for (Pair<Long,String> p : mPhotos)
+		{
+			photos.put(""+p.first+":"+p.second);
+		}
 		return new JSONObject()
 				.put("meta",
 						new JSONObject()
@@ -129,7 +135,7 @@ public class PictureRecorder implements IRecorder {
 								.put("date", mStart)
 								.put("frames", getFrameCount())
 				)
-				.put("items", new JSONArray(mPhotos))
+				.put("items", photos)
 				.toString();
 	}
 
