@@ -110,6 +110,10 @@ public class SettingsDialog implements SeekBar.OnSeekBarChangeListener, DialogIn
 		initSpinnerRecordMove((Spinner) mRoot.findViewById(R.id.spinnerMode));
 		initSpinnerImageHandler((Spinner) mRoot.findViewById(R.id.spinnerHandler));
 
+		((EditText)mRoot.findViewById(R.id.editTextServer)).setText(mSettings.getmSmbServer());
+		((EditText)mRoot.findViewById(R.id.editTextUsername)).setText(mSettings.getmSmbUsername());
+		((EditText)mRoot.findViewById(R.id.editTextPassword)).setText(mSettings.getmSmbPassword());
+		checkBoxSmbUploadControl.setChecked(mSettings.ismSmbUpload());
 		new Builder(mContext).setView(mRoot).setPositiveButton(R.string.settingsSave, this).setOnCancelListener(this).create().show();
 	}
 
@@ -249,6 +253,7 @@ public class SettingsDialog implements SeekBar.OnSeekBarChangeListener, DialogIn
 		mSettings.setSmbUsername(((EditText)mRoot.findViewById(R.id.editTextUsername)).getText().toString());
 		mSettings.setSmbPassword(((EditText)mRoot.findViewById(R.id.editTextPassword)).getText().toString());
 		mSettings.setSmbServer(((EditText)mRoot.findViewById(R.id.editTextServer)).getText().toString());
+		mSettings.setSmbUpload(checkBoxSmbUploadControl.isChecked());
 		String newPath = editTextPath.getText().toString();
 		if (newPath.length() >= 4 && !newPath.equals(mSettings.getPath())) {
 			mSettings.setPath(newPath);
