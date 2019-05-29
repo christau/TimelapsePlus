@@ -9,6 +9,10 @@ import java.security.Policy;
 import java.util.List;
 import java.util.Locale;
 
+import jcifs.smb.NtlmPasswordAuthentication;
+import jcifs.smb.SmbFile;
+import jcifs.smb.SmbFileOutputStream;
+
 /**
  * vlad805 (c) 2018
  */
@@ -101,14 +105,15 @@ public class CameraAdapter {
 			params.setPreviewSize(targetPreviewSize.width, targetPreviewSize.height);
 			// resizePreviewView(targetPreviewSize.width, targetPreviewSize.height); // TODO
 		}
-		mCamera.setParameters(params);
+		try
+		{
+			mCamera.setParameters(params);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 		//mCamera.enableShutterSound(false);
 
-		/*try {
-			mCamera.reconnect();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 	}
 
 	public Camera getCamera() {

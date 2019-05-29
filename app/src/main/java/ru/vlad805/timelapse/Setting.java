@@ -22,6 +22,10 @@ abstract public class Setting {
 	public static final String RECORD_MODE = "recordMode";
 	public static final String HANDLER = "imageHandler";
 	public static final String REMOTE_CONTROL = "remoteControl";
+	public static final String SMB_UPLOAD = "smbUpload";
+	public static final String SMB_USERNAME = "smbUsername";
+	public static final String SMB_PASSWORD = "smbPassword";
+	public static final String SMB_SERVER = "smbServer";
 
 	public static final String SIZE = "size";
 

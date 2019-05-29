@@ -17,6 +17,7 @@ import android.os.PowerManager.WakeLock;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.*;
@@ -299,6 +300,10 @@ public class TimeLapseActivity extends AppCompatActivity implements Callback, On
 
 		Camera camera = null;
 		try {
+			if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
+					== PackageManager.PERMISSION_DENIED) {
+				ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 0);
+			}
 			camera = Camera.open();
 			mCameraAdapter.setCamera(camera);
 			camera.setPreviewDisplay(holder);
@@ -372,7 +377,7 @@ public class TimeLapseActivity extends AppCompatActivity implements Callback, On
 				break;
 
 			case Setting.RecordMode.PHOTO_DIR:
-				mVideoRecorder = new PictureRecorder(mSettings.getPath(), getTimeStamp());
+				mVideoRecorder = new PictureRecorder(mSettings, getTimeStamp());
 				break;
 
 			default:

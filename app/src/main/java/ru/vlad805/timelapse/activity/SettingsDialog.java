@@ -27,6 +27,7 @@ public class SettingsDialog implements SeekBar.OnSeekBarChangeListener, DialogIn
 	private SeekBar seekQuality;
 	private EditText editTextPath;
 	private CheckBox checkBoxRemoteControl;
+	private CheckBox checkBoxSmbUploadControl;
 
 	private String[] mEffectsList;
 	private String[] mBalancesList;
@@ -95,6 +96,10 @@ public class SettingsDialog implements SeekBar.OnSeekBarChangeListener, DialogIn
 		checkBoxRemoteControl = mRoot.findViewById(R.id.checkboxRemoteControl);
 		checkBoxRemoteControl.setOnCheckedChangeListener(this);
 		checkBoxRemoteControl.setChecked(mSettings.hasRemoteControl());
+
+		checkBoxSmbUploadControl = mRoot.findViewById(R.id.checkboxSmbUpload);
+		checkBoxSmbUploadControl.setOnCheckedChangeListener(this);
+		checkBoxSmbUploadControl.setChecked(mSettings.hasRemoteControl());
 
 		((TextView) mRoot.findViewById(R.id.aboutVersion)).setText(String.format(mContext.getString(R.string.aboutVersion), BuildConfig.VERSION_NAME));
 
@@ -241,7 +246,9 @@ public class SettingsDialog implements SeekBar.OnSeekBarChangeListener, DialogIn
 		mSettings.setInterval(getIntegerValue(editTextInterval, 5000));
 		mSettings.setFPS(getIntegerValue(editTextFPS, 15));
 		mSettings.setQuality(seekQuality.getProgress());
-
+		mSettings.setSmbUsername(((EditText)mRoot.findViewById(R.id.editTextUsername)).getText().toString());
+		mSettings.setSmbPassword(((EditText)mRoot.findViewById(R.id.editTextPassword)).getText().toString());
+		mSettings.setSmbServer(((EditText)mRoot.findViewById(R.id.editTextServer)).getText().toString());
 		String newPath = editTextPath.getText().toString();
 		if (newPath.length() >= 4 && !newPath.equals(mSettings.getPath())) {
 			mSettings.setPath(newPath);
@@ -337,6 +344,10 @@ public class SettingsDialog implements SeekBar.OnSeekBarChangeListener, DialogIn
 		switch (checkbox.getId()) {
 			case R.id.checkboxRemoteControl:
 				mSettings.setRemoteControl(checkbox.isChecked());
+				mOnSettingsChanged.onControlChanged();
+				break;
+			case R.id.checkboxSmbUpload:
+				mSettings.setSmbUpload(checkbox.isChecked());
 				mOnSettingsChanged.onControlChanged();
 				break;
 		}

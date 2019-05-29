@@ -3,6 +3,7 @@ package ru.vlad805.timelapse;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.text.Editable;
 
 @SuppressWarnings("UnusedReturnValue")
 public class SettingsBundle {
@@ -26,6 +27,10 @@ public class SettingsBundle {
 	private int mQuality;
 
 	private int mIntro;
+	private boolean mSmbUpload;
+	private String mSmbUsername;
+	private String mSmbPassword;
+	private String mSmbServer;
 
 	public SettingsBundle(Context context) {
 		mContext = context;
@@ -47,6 +52,10 @@ public class SettingsBundle {
 		mRecordMode = settings.getInt(Setting.RECORD_MODE, Setting.RecordMode.VIDEO);
 		mHandler = settings.getInt(Setting.HANDLER, 0);
 		mRemoteControl = settings.getBoolean(Setting.REMOTE_CONTROL, false);
+		mSmbUpload = settings.getBoolean(Setting.SMB_UPLOAD, false);
+		mSmbUsername = settings.getString(Setting.SMB_USERNAME, "");
+		mSmbPassword = settings.getString(Setting.SMB_PASSWORD, "");
+		mSmbServer = settings.getString(Setting.SMB_SERVER, "");
 		return this;
 	}
 	
@@ -66,6 +75,10 @@ public class SettingsBundle {
 		editor.putInt(Setting.RECORD_MODE, mRecordMode);
 		editor.putInt(Setting.HANDLER, mHandler);
 		editor.putBoolean(Setting.REMOTE_CONTROL, mRemoteControl);
+		editor.putBoolean(Setting.SMB_UPLOAD, mSmbUpload);
+		editor.putString(Setting.SMB_SERVER, mSmbPassword);
+		editor.putString(Setting.SMB_UPLOAD, mSmbUsername);
+		editor.putString(Setting.SMB_SERVER, mSmbServer);
 		editor.apply();
 		return this;
 	}
@@ -202,5 +215,45 @@ public class SettingsBundle {
 
 	private int toRange(int value, int min, int max) {
 		return Math.min(max, Math.max(min, value));
+	}
+
+	public void setSmbUpload(boolean checked)
+	{
+		mSmbUpload = checked;
+	}
+
+	public boolean ismSmbUpload()
+	{
+		return mSmbUpload;
+	}
+
+	public void setSmbUsername(String username)
+	{
+		mSmbUsername=username;
+	}
+
+	public String getmSmbUsername()
+	{
+		return mSmbUsername;
+	}
+
+	public void setSmbPassword(String password)
+	{
+		mSmbPassword = password;
+	}
+
+	public String getmSmbPassword()
+	{
+		return mSmbPassword;
+	}
+
+	public void setSmbServer(String server)
+	{
+		mSmbServer = server;
+	}
+
+	public String getmSmbServer()
+	{
+		return mSmbServer;
 	}
 }
