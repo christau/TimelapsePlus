@@ -187,13 +187,24 @@ public class TimeLapseActivity extends AppCompatActivity implements Callback, On
 	 */
 	private void setCurrentCountOfFrames() {
 		//noinspection RedundantCast
-		mtvFramesCount.setText(String.format(
-				getString(R.string.mainFramesCount),
-				mVideoRecorder.getFrameCount(),
-				(int) (mVideoRecorder.getFrameCount() / mSettings.getFPS()),
-				(int) (mVideoRecorder.getFileSize() / Math.pow(2, 20)),
-				(int) (mRoot.getFreeSpace() / Math.pow(2, 20))
-		));
+		if(mSettings.ismSmbUpload()) {
+			mtvFramesCount.setText(String.format(
+					getString(R.string.mainFramesCount),
+					mVideoRecorder.getFrameCount(),
+					(int) (mVideoRecorder.getFrameCount() / mSettings.getFPS()),
+					(int) (mVideoRecorder.getFileSize() / Math.pow(2, 20)),
+					(int) 0
+			));
+
+		} else {
+			mtvFramesCount.setText(String.format(
+					getString(R.string.mainFramesCount),
+					mVideoRecorder.getFrameCount(),
+					(int) (mVideoRecorder.getFrameCount() / mSettings.getFPS()),
+					(int) (mVideoRecorder.getFileSize() / Math.pow(2, 20)),
+					(int) (mRoot.getFreeSpace() / Math.pow(2, 20))
+			));
+		}
 	}
 
 	public void updateSettingsPreview() {

@@ -51,8 +51,14 @@ public class SettingsBundle {
 		mIntro = settings.getInt(Setting.INTRO, 0);
 		mRecordMode = settings.getInt(Setting.RECORD_MODE, Setting.RecordMode.VIDEO);
 		mHandler = settings.getInt(Setting.HANDLER, 0);
-		mRemoteControl = settings.getBoolean(Setting.REMOTE_CONTROL, false);
-		mSmbUpload = settings.getBoolean(Setting.SMB_UPLOAD, false);
+		try
+		{
+			mRemoteControl = settings.getBoolean(Setting.REMOTE_CONTROL, false);
+			mSmbUpload = settings.getBoolean(Setting.SMB_UPLOAD, false);
+
+		}catch (Exception e){
+
+		}
 		mSmbUsername = settings.getString(Setting.SMB_USERNAME, "");
 		mSmbPassword = settings.getString(Setting.SMB_PASSWORD, "");
 		mSmbServer = settings.getString(Setting.SMB_SERVER, "");
@@ -76,8 +82,8 @@ public class SettingsBundle {
 		editor.putInt(Setting.HANDLER, mHandler);
 		editor.putBoolean(Setting.REMOTE_CONTROL, mRemoteControl);
 		editor.putBoolean(Setting.SMB_UPLOAD, mSmbUpload);
-		editor.putString(Setting.SMB_SERVER, mSmbPassword);
-		editor.putString(Setting.SMB_UPLOAD, mSmbUsername);
+		editor.putString(Setting.SMB_PASSWORD, mSmbPassword);
+		editor.putString(Setting.SMB_USERNAME, mSmbUsername);
 		editor.putString(Setting.SMB_SERVER, mSmbServer);
 		editor.apply();
 		return this;

@@ -119,14 +119,14 @@
 				android:layout_height="wrap_content"
 				android:layout_weight="0"
 				android:labelFor="@+id/editTextServer"
-				android:text="Server and Folder"/>
+				android:text="Server and Share"/>
 
 			<EditText
 				android:id="@+id/editTextServer"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_weight="2.0"
-				android:hint="//192.168.1.1/myShare"
+				android:hint="192.168.1.1/myShare"
 				android:inputType="text"
 				android:maxLines="1"/>
 

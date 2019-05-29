@@ -61,8 +61,8 @@ public class PictureRecorder implements IRecorder {
 	private static SmbFile getSmbFile(String path) {
 		try {
 			//String url = "smb://192.168.1.50/backup_pi//" + path;
-			NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication(null, mSettings.getmSmbUsername(), mSettings.getmSmbUsername());
-			return new SmbFile(mSettings.getmSmbServer()+"//"+path, auth);
+			NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication(null, mSettings.getmSmbUsername(), mSettings.getmSmbPassword());
+			return new SmbFile("smb://" + mSettings.getmSmbServer()+"//"+path, auth);
 
 		} catch (Exception e) {
 			e.printStackTrace();
